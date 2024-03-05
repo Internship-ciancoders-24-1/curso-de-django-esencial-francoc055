@@ -35,3 +35,4 @@ def list_posts(request):
     # return HttpResponse('<br>'.join(content))
 
 
+
