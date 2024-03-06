@@ -1,0 +1,39 @@
+{% extends "users/base.html" %}
+
+{% comment %} {% load socialaccount %} {% endcomment %}
+
+{% block head_content %}
+<title>sign in</title>
+{% endblock%}
+
+{% block container %}
+
+    {% if error %}
+        <p class="alert alert-danger">
+            Your username and password didn't match. Please try again.
+        </p>
+    {% endif%} 
+
+    <form method="POST" action="{% url "login" %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Username" name="username" />
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" type="password" placeholder="Password" name="password" />
+        </div>
+
+
+        <button class="btn btn-secondary btn-block mt-5" type="submit">Sign in!</button>
+        {% comment %} <a class="btn btn-primary btn-block" href="{% provider_login_url "facebook" method="oauth2" %}">
+            <span class="fab fa-facebook"></span>
+            Login with facebook
+        </a> {% endcomment %}
+
+    </form>
+
+    {% comment %} <p class="mt-4">Don't have an account yet? <a href="{% url "users:signup" %}">Sign up here.</a></p> {% endcomment %}
+
+{% endblock %}

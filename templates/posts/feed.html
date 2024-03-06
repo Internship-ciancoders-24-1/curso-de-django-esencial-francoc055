@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head_content %}
+    <title>Feed</title>
+{% endblock %}
+
+{% block container %}
+    <div class="container mt-5">
+        <div class="">
+            {% for post in posts %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ post.picture }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.name }}</h5>
+                            <p class="card-text">Age: {{ post.age }}</p>
+                            <p class="card-text">Timestamp: {{ post.timestamp }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 posts = [
     {
@@ -23,16 +24,9 @@ posts = [
     }
 ]
 
+@login_required
 def list_posts(request):
-    return render(request, 'feed.html', {'posts': posts}) 
-    # content = []
-    # for post in posts:
-    #     content.append(
-    #         f"""<h1>{post['name']}</h1>
-    #         <p>{post['user']} - {post['timestamp']}</p>
-    #         <figure><img src="{post['picture']}"/></figure>"""
-    #     ) 
-    # return HttpResponse('<br>'.join(content))
+    return render(request, 'posts/feed.html', {'posts': posts}) 
 
 
 
