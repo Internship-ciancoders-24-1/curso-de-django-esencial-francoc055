@@ -10,11 +10,11 @@
             {% for post in posts %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="{{ post.picture }}" class="card-img-top" alt="...">
+                        <img src="{{ post.photo.url }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">{{ post.name }}</h5>
-                            <p class="card-text">Age: {{ post.age }}</p>
-                            <p class="card-text">Timestamp: {{ post.timestamp }}</p>
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">Created: {{ post.created }}</p>
+                            <p class="card-text">Modified: {{ post.modified }}</p>
                         </div>
                     </div>
                 </div>

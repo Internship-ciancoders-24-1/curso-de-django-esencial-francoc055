@@ -5,7 +5,24 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from django.db.utils import IntegrityError
 from users.forms import ProfileForm, SignupForm
+from posts.models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from django.urls import reverse
 
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'users/detail.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    queryset = User.objects.all()
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['posts'] = Post.objects.filter(user=user).order_by('-created')
+        return context
 
 def login_view(request):
     if request.method == 'POST':
@@ -14,7 +31,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('feed')
+            return redirect('feed') 
         else:
             return render(request, 'users/login.html', {'error': 'credenciales invalidas'})
         
@@ -27,7 +44,7 @@ def logout_view(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = SignupForm(request.POST) 
         if form.is_valid():
             form.save()
             return redirect('login')
@@ -56,7 +73,8 @@ def update_profile(request):
             profile.phone_number = data['phone_number']
             profile.save()
 
-            return redirect('update_profile')
+            url = reverse('users:detail', kwargs={'username': request.user.username})
+            return redirect(url)
         else:
             form = ProfileForm()
 
