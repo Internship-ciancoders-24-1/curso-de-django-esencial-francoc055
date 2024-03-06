@@ -13,7 +13,8 @@ urlpatterns = [
     path('ordenar', views.ordenar, name='sort'),
 
     #posts
-    path('posts/', posts_views.list_posts, name='feed'),
+    path('', posts_views.list_posts, name='feed'),
+    path('posts/new', posts_views.create_post, name='create_post'),
 
     #users
     path('users/login', users_views.login_view, name='login'),
